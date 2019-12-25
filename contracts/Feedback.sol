@@ -23,7 +23,7 @@ contract MyContract{
     struct Policymaker
     {
 
-        bytes32 name;
+        string name;
         uint id;
         uint constituency;
         bool exists;
@@ -52,7 +52,7 @@ contract MyContract{
     struct Person
     {
         uint id;
-        bytes32 name;
+        string name;
         //initializing a dynamic array for the feedbacks
         //stores the feedback everytime the person votes in for a policy with the profile
         uint numPolcies; //counts the number of policies the person is enrolled in
@@ -84,7 +84,7 @@ contract MyContract{
     //setting up the permissions an passing thee _personAddress as a key
     //initializing the parameters of the function
     //mapping of the address to the Person
-    function addPerson(uint _id, bytes32 _name, address _personAddress) public
+    function addPerson(uint _id, string memory _name, address _personAddress) public
     {
         require(msg.sender==commisioner);
         require(!persons[_personAddress].exists);
@@ -101,7 +101,7 @@ contract MyContract{
         //initializing the parameters of the function
         //mapping of the address to the Policymaker
 
-    function addPolicymaker(address _policymakerAddress,bytes32 _name, uint _id,uint _constituency) public
+    function addPolicymaker(address _policymakerAddress,string memory _name, uint _id,uint _constituency) public
     {
         require(msg.sender==commisioner);
         require(!policymakers[_policymakerAddress].exists);
