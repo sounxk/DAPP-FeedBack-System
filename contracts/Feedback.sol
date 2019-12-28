@@ -137,7 +137,8 @@ contract MyContract{
     }
 
     //enrolls person into a Policy
-    function enrollPerson(address _policyAddress,address _personAddress) public {
+    function enrollPerson(address _policyAddress,address _personAddress) public
+     {
         require(msg.sender == commisioner, "Only Commisioner can do this!");
         require(policies[_policyAddress].exists,"Policy must exist!");
         require(persons[_personAddress].exists, "Person must exist!");
@@ -168,6 +169,38 @@ contract MyContract{
       // trigger voted event
         emit votedEvent(_policyAddress);
     }
+
+    function withdraw(uint withdrawAmount) public returns (uint) 
+
+    {
+      /* If the sender's balance is at least the amount they want to withdraw,
+         Subtract the amount from the sender's balance, and try to send that amount of ether
+         to the user attempting to withdraw. IF the send fails, add the amount back to the user's balance
+         return the user's balance.*/
+      address user = msg.sender;
+
+      // require(withdrawAmount >= owner.balance);
+      require(persons[user].credits >= withdrawAmount);
+
+      persons[user].credits -= withdrawAmount;
+
+      user.transfer(withdrawAmount);
+
+      return persons[user].credits;
+  }
+
+
+
+
+  function balance() public view returns (uint)
+
+   {
+      /* Get the balance of the sender of this transaction */
+      address user = msg.sender;
+
+      return persons[user].credits;
+  }
+
 
 
 }
